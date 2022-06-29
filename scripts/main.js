@@ -63,23 +63,24 @@ let pauseButton = {
     height: 16
 }
 
+
 let uploadButton = {
     x: 192 - 60,
-    y: 214,
+    y: 8,
     width: 16,
     height: 16
 }
 
 let downloadButton = {
     x: 192 - 40,
-    y: 214,
+    y: 8,
     width: 16,
     height: 16
 }
 
 let deleteButton = {
     x: 192 - 20,
-    y: 214,
+    y: 8,
     width: 16,
     height: 16
 }
