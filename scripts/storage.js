@@ -17,6 +17,9 @@ class Storage extends ScreenState {
 		this.slotWidth = 40
 		this.slotHeight = 40
 
+		//what does this even do lol
+		this.inventoryIsVisible = true
+
 	}
 
 	setup() {
@@ -49,6 +52,17 @@ class Storage extends ScreenState {
 
 		image(storageBG, 0, 0)
 
+		// draw mute button
+      		if (MUTE) image(unmuteButtonImg, muteButton.x, muteButton.y)
+        	else image(muteButtonImg, muteButton.x, muteButton.y)
+        
+        	// draw pause button
+        	if (this.isPaused) image(unpauseButtonImg, pauseButton.x, pauseButton.y)
+        	else image(pauseButtonImg, pauseButton.x, pauseButton.y)
+
+		
+
+
 		// draw each object
 		this.objects.forEach((obj, i) => {
 			let { slotX, slotY } = this.getSlotPos(i)
@@ -61,11 +75,21 @@ class Storage extends ScreenState {
 					obj.pos.y = slotY + this.slotHeight / 2 + obj.height / 2
 				}
 				if (i === this.selectedObjectIndex && !obj.isBeingDragged) {
-					image(selectedStorageSlotImg, slotX, slotY)
+					image(selectedStorageSlotImg, slotX, slotY-5)
 				}
+				
 				obj.draw()
 			}
 		})
+
+
+		// draw hotbar
+        	inventory.objects.forEach(obj => {
+        	    if (obj) {
+        	        obj.isInInventory = true
+        	        obj.draw()
+        	    }
+        	})
 
 		// draw selected object's name
 		let selectedObject = this.objects[this.selectedObjectIndex]
@@ -79,6 +103,18 @@ class Storage extends ScreenState {
 			strokeWeight(2)
 			text(selectedObject.name, selectionX, selectionY - 5)
 		}
+		
+
+
+		// draw bunbon stats
+        	if (selectedObject && selectedObject instanceof Bunbon) {
+        	    let normalizedScore = selectedObject.score / selectedObject.maxScore
+        	    let scoreImageIndex = floor(normalizedScore * 10)
+            	image(scoreButtonImgs[scoreImageIndex], WORLD_WIDTH - 36, WORLD_HEIGHT + 4)
+            	if (DEBUG) selectedObject.drawStatOrb()
+	        }
+
+
 
 		// draw upload button
 		if (!this.isFull()) {
@@ -100,6 +136,8 @@ class Storage extends ScreenState {
 		} else {
 			image(disabledDeleteButtonImg, deleteButton.x, deleteButton.y)
 		}
+		// draw bunbon stats
+        	
 
 	}
 
@@ -191,6 +229,18 @@ class Storage extends ScreenState {
 		) {
 			this.deleteObject()
 
+		}else if (
+            		x >= pauseButton.x && x < pauseButton.x + pauseButton.width &&
+            		y >= pauseButton.y && y < pauseButton.y + pauseButton.height
+        		) {
+       			     togglePause()
+            
+        	} else if (
+            		x >= muteButton.x && x < muteButton.x + muteButton.width &&
+            		y >= muteButton.y && y < muteButton.y + muteButton.height &&
+            		!this.isPaused
+        		) {
+            			toggleMute()    
 		} else if (
 			x >= spaceButton.x && x < spaceButton.x + spaceButton.width &&
 			y >= spaceButton.y && y < spaceButton.y + spaceButton.height
@@ -205,14 +255,16 @@ class Storage extends ScreenState {
 
 		if (key === 'm') {
 			muteSounds()
+		
+        	} else if (key === 'p') {
+           		 togglePause()
 		}
-
 	}
 
 	firstOpenSlotIndex() {
 
-		let freeStorageSlotIndex = -1
-    this.objects.forEach((obj, index) => {
+	let freeStorageSlotIndex = -1
+   	this.objects.forEach((obj, index) => {
         if (!obj && freeStorageSlotIndex === -1) freeStorageSlotIndex = index
     })
     return freeStorageSlotIndex
