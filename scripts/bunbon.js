@@ -19,6 +19,8 @@ let bunbonEars = {
     short: earsStartIndex + 3,
     lop: earsStartIndex + 4,
     fin: earsStartIndex + 5,
+    mouse: earsStartIndex + 6,
+    dragon: earsStartIndex + 7,
 }
 
 let tailsStartIndex = 80
@@ -33,6 +35,7 @@ let bunbonTails = {
     long: tailsStartIndex + 6,
     slug: tailsStartIndex + 7,
     puff: tailsStartIndex + 8,
+    rat: tailsStartIndex + 9,
 }
 
 let backsStartIndex = 100
@@ -45,6 +48,7 @@ let bunbonBacks = {
     fin: backsStartIndex + 4,
     spikes: backsStartIndex + 5,
     shell: backsStartIndex + 6,
+    batwings: backsStartIndex + 7,
 }
 
 let headsStartIndex = 120
@@ -57,6 +61,7 @@ let bunbonHeads = {
     horns: headsStartIndex + 4,
     antennae: headsStartIndex + 5,
     unicorn: headsStartIndex + 6,
+    mohawk: headsStartIndex + 7,
 }
 
 let patternsStartIndex = 140
@@ -70,6 +75,7 @@ let bunbonPatterns = {
     band: patternsStartIndex + 5,
     spots: patternsStartIndex + 6,
     freckles: patternsStartIndex + 7,
+    candycane: patternsStartIndex + 8,
 }
 
 let facesStartIndex = 20
@@ -294,7 +300,7 @@ class Bunbon extends GameObject {
         let primaryColorSpritesheet = colorSpritesheets[this.color]
         let secondaryColorSpritesheet = colorSpritesheets[this.secondaryColor]
 
-        // save sprites]
+        // save sprites
         this.babyspriteImgs = [
             primaryColorSpritesheet.getSprite(bunbonBabyBodies[0]),
             primaryColorSpritesheet.getSprite(bunbonBabyBodies[1]),
