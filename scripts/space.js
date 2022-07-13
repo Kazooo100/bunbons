@@ -36,13 +36,13 @@ class Space extends ScreenState {
             }
         }
 
-		playMusic('space')
+        if (!MUTE) planetSoundtracks['space'].play()
 
     }
 
     close() {
 
-		stopMusic('space')
+        planetSoundtracks['space'].stop()
         
     }
 
@@ -175,8 +175,8 @@ class Space extends ScreenState {
             y >= muteButton.y && y < muteButton.y + muteButton.height
         ) {
             MUTE = !MUTE
-            if (MUTE) stopMusic('space')
-            else playMusic('space')
+            if (MUTE) planetSoundtracks['space'].pause()
+            else planetSoundtracks['space'].play()
             return
         }
 
@@ -194,7 +194,7 @@ class Space extends ScreenState {
                     relY < planet.y + planet.radius &&
                     planet.isUnlocked
                 ) {
-                    playSound('go-to-planet')
+                    if (!MUTE) soundEffects['go-to-planet'].play()
                     openScreen('planet', i)
                 }
             })

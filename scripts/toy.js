@@ -172,7 +172,7 @@ class Toy extends GameObject {
         }
         
         if (!agent) {
-            playSound('click-toy')
+            if (!MUTE) soundEffects['click-toy'].play()
         }
 
     }

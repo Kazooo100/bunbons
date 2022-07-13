@@ -1,0 +1,175 @@
+drawUserInterface() {
+
+        let selectedBunbon = getCurrentBunbon()
+
+        // draw user interface
+        image(userinterfaceImg, 0, 0)
+        if (unlockedPlanetCount > 1) {
+            image(spaceButtonImg, 3, WORLD_HEIGHT + 3)
+        }
+
+        
+        // draw mute button
+        if (MUTE) image(unmuteButtonImg, muteButton.x, muteButton.y)
+        else image(muteButtonImg, muteButton.x, muteButton.y)
+        
+        // draw pause button
+        if (this.isPaused) image(unpauseButtonImg, pauseButton.x, pauseButton.y)
+        else image(pauseButtonImg, pauseButton.x, pauseButton.y)
+
+        // draw storage button
+        let posX = mouseX / CANVAS_SCALE
+        let posY = mouseY / CANVAS_SCALE
+        if (posX >= 240 && posX < 280 && posY >= inventory.y && posY < inventory.y + inventory.height) {
+            image(storageOnHoverImg, 237, 203)
+        } else {
+            image(storageImg, 237, 203)
+        }
+        
+        // draw inventory
+        inventory.objects.forEach(obj => {
+            if (obj) {
+                obj.isInInventory = true
+                obj.draw()
+            }
+        })
+
+        // draw bunbon stats
+        if (selectedBunbon && selectedBunbon instanceof Bunbon) {
+            let normalizedScore = selectedBunbon.score / selectedBunbon.maxScore
+            let scoreImageIndex = floor(normalizedScore * 10)
+            if (confirmingBlastOff) {
+                scoreImageIndex = 12
+            } else if (selectedBunbon.canBlastOff(this)) {
+                scoreImageIndex = 11
+            } else if (selectedBunbon.reachedBestScore) {
+                scoreImageIndex = 10
+            }
+            image(scoreButtonImgs[scoreImageIndex], WORLD_WIDTH - 36, WORLD_HEIGHT + 4)
+            if (DEBUG) selectedBunbon.drawStatOrb()
+        }
+
+    }
+
+
+DRAW INVENOTRY OBJECTS
+
+drawGameObjects() {
+        // update and draw game objects
+        let objectsToCleanUp = []
+        this.sortGameObjectsByPos()
+        this.objectsInDrawOrder.forEach(objectIndex => {
+            let obj = this.objects[objectIndex]
+            obj.isInInventory = inventory.objects.includes(obj) || this.objects.find(o => o.carriedBunbon === obj)
+            if (!obj.isInInventory) obj.update()
+            obj.draw()
+            if (obj.removeMe) objectsToCleanUp.push(objectIndex)
+        })
+
+
+
+DRAW HOTBAR
+
+// draw hotbar
+        	inventory.objects.forEach(obj => {
+        	    if (obj) {
+        	        obj.isInInventory = true
+        	        obj.draw()
+        	    }
+        	})
+
+
+else if a or b do
+else do 
+
+fun fact if you import bunbons with new parts into old game you get this
+
+
+let eggColors = {
+			'intro': 'chocolate',
+			'deer': 'dust',
+			'bee': 'yellow',
+			'alicorn': 'purple',
+			'alien': 'pink',
+			'leafcat': 'gold',
+			'snail': 'blush',
+			'sheep': 'cream',
+			'aqua': 'aqua',
+			'lizard': 'green',
+			'mousepunk' : 'grey',
+			'dragonegg' : 'green',
+			'randomegg' : 'black'
+		}
+
+
+        ++++++++++++++++++++++++++++++++++++++++Comments from storage.js
+
+        	//{
+			//console.log({colorSpritesheets,bunbonEggs}, this.objects)
+			//console.log(colorSpritesheets[eggColors[itemName]].getSprite(eggSprite))
+			//Spritesheet(spritesheetImg, 32, 32)
+			//toys list egg as toy?
+			//bunbonEggs = egg sprites
+			//called egg, no sprite, on add has sprites
+			//console.log(eggColors())
+			//let itemSprite = foodList.includes(itemName) || toyList.includes(itemName) ? baseSpritesheet.getSprite(spriteIndex) : colorSpritesheets[eggColors()[itemName]].getSprite(eggSprite)
+			//let itemSprite = baseSpritesheet.getSprite(spriteIndex)
+			//console.log({spriteIndex})
+            //console.log({colorSpritesheets,bunbonEggs}, this.objects)
+			//}
+
+
+
+
+++++++++++ AddNewItem
+
+let addNewItem = itemName => {
+			
+			let imageEl = document.createElement('img')
+			imageEl.width = 64
+			imageEl.height = 64
+			imageEl.alt = itemName
+			//console.log({colorSpritesheets,bunbonEggs}, this.objects)
+			let eggSprite = 4
+			let spriteIndex = foodList.includes(itemName) ? foodSprites[itemName] : toyList.includes(itemName) ? toySprites[itemName] : eggSprite
+
+			//{
+			//console.log(colorSpritesheets[eggColors[itemName]].getSprite(eggSprite)
+			//Spritesheet(spritesheetImg, 32, 32)
+			//toys list egg as toy?
+			//bunbonEggs = egg sprites
+			//called egg, no sprite, on add has sprites
+			//console.log(eggColors())
+			//let itemSprite = foodList.includes(itemName) || toyList.includes(itemName) ? baseSpritesheet.getSprite(spriteIndex) : colorSpritesheets[eggColors()[itemName]].getSprite(eggSprite)
+			//}
+
+			let itemSprite = foodList.includes(itemName) || toyList.includes(itemName) ? baseSpritesheet.getSprite(spriteIndex) : colorSpritesheets[eggColors[itemName]].getSprite(eggSprite)
+			
+			//let itemSprite = baseSpritesheet.getSprite(spriteIndex)
+			//console.log({spriteIndex})
+			if (spriteIndex=eggSprite) {this.color}
+
+			//----------------------cant get already got sprite sheet
+
+
+
+			imageEl.src = itemSprite.canvas.toDataURL()
+			let buttonEl = document.createElement('button')
+			buttonEl.className = 'image-button'
+			buttonEl.onclick = () => {
+				let item = foodList.includes(itemName) ? new Food(this.randomPoint(), itemName) : toyList.includes(itemName) ? new Toy(this.randomPoint(), itemName)  : new Egg(this.randomPoint(), itemName)				
+
+				this.addObject(item)
+				saveState()
+				closeModal()
+			}
+			buttonEl.appendChild(imageEl)
+			modal.appendChild(buttonEl)
+		
+		}
+}
+
+        } else if (bunbonDNA === 'randomegg'){
+            this.bunbonDNA = Bunbon.randomDNA({
+
+            })

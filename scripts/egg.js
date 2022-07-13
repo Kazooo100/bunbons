@@ -166,7 +166,32 @@ class Egg extends Toy {
                 sleepinessRate: 30
             })
 
-        } else if (bunbonDNA === 'dragon') {
+         } else if (bunbonDNA === 'rat') {
+            this.bunbonDNA = Bunbon.randomDNA({
+                //introBunbonColors.pop(),
+                //color: random(Object.keys(ratBunbonColors)),
+                color: 'black',
+                secondaryColor: 'pink',
+                ears: 'mouse',
+                tail: 'rat',
+                head: 'none',
+                back: 'none',
+                pattern: 'none',
+                earsUsePrimaryColor: false,
+                tailUsesPrimaryColor: false,
+                maxSpeed: 0.8,
+                jumpChance: 0.08,
+                ageToAdulthood: 120,
+                hungerRate: 70,
+                boredomRate: 80,
+                lonelinessRate: 70,
+                sleepinessRate: 30
+            })
+
+        
+        
+        
+        } else if (bunbonDNA === 'dragonegg') {
             this.bunbonDNA = Bunbon.randomDNA({
                 color: 'green',
                 secondaryColor: 'purple',
@@ -186,6 +211,8 @@ class Egg extends Toy {
                 sleepinessRate: 80
             })
 
+        } else if (bunbonDNA === 'randomegg'){
+            this.bunbonDNA = Bunbon.randomDNA()
         } else {
             this.bunbonDNA = bunbonDNA || Bunbon.randomDNA()
         }
@@ -215,7 +242,7 @@ class Egg extends Toy {
         }
         this.isShaking = true
 
-        playSound('push-egg')
+        //playSound('push-egg')
 
     }
 
@@ -226,7 +253,7 @@ class Egg extends Toy {
         if (LOG_STORIES) console.log(bunbon.name, 'has hatched')
         this.removeMe = true
 
-        playSound('egg-hatch')
+        //playSound('egg-hatch')
         
         // save game
         saveState()

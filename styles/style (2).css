@@ -24,18 +24,11 @@ body {
 
 canvas {
     display: block;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    margin: auto;
+    margin: 20px auto;
     border-radius: 2px;
     background: white;
     image-rendering: crisp-edges;
     image-rendering: pixelated;
-    width: min(calc(100vh * calc(4 / 3)), 100%) !important;
-    height: min(calc(100vw * calc(3 / 4)), 100%) !important;   
 }
 
 img {

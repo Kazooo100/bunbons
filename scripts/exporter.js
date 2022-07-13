@@ -212,6 +212,10 @@ function parseBunbonString(bunbonString) {
 
 }
 
+function downloadAllBunbon(bunbon) {
+	downloadBunbon
+}
+
 function downloadBunbon(bunbon) {
 
 	let face = random(['blank', 'smile', 'grin', 'laugh', 'gasp', 'blush', 'moue', 'angry', 'frown'])
@@ -228,6 +232,8 @@ function downloadBunbon(bunbon) {
 		img.loadPixels()
 		return img
 	}
+
+	
 
 	let img1 = createImg(0)
 	let img2 = createImg(1)

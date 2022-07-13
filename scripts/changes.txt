@@ -1,0 +1,35 @@
+changed storage.js
+
+changed main.js 
+-upload/dl/delete pos
+
+
+
+SG
+let spriteIndex = foodList.includes(itemName) ? foodSprites[itemName] : toySprites[itemName] , eggSprites 
+
+
+
+KAZ			
+let spriteIndex =
+	if (foodList.includes(itemName)) {
+	foodSprites[itemName]
+	}
+	else if (toyList.includes(itemName)) {
+	toySprites[itemName]
+	}
+	else if (eggList.includes(itemName)) {
+	eggSprites
+	}
+}
+
+DMFJ
+let spriteIndex
+
+if (foodList.includes(itemName)){
+  spriteIndex = foodSprites[itemName]
+} else if (toyList.includes(itemName)) {
+  spriteIndex = toySprites[itemName]
+} else if (eggList.includes(itemName)) {
+  spriteIndex = eggSprites
+}

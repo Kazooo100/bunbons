@@ -133,20 +133,17 @@ class Planet extends ScreenState {
 
             this.objects = []
 
-            if (this.name === 'mossyforest') {
+             if (this.name === 'park') {
+                this.objects.push(new Toy(this.randomPoint(), 'bundoll'))
+                this.objects.push(new Food(this.randomPoint(), 'sandwich'))
+                this.objects.push(new Egg(this.randomPoint(), 'intro'))
+                this.objects.push(new Egg(this.randomPoint(), 'intro'))
+                this.objects.push(new Egg(this.randomPoint(), 'intro'))
+
+             }else if (this.name === 'mossyforest') {
                 this.objects.push(new Toy(this.randomPoint(), 'mossball'))
                 this.objects.push(new Food(this.randomPoint(), 'mushrooms'))
                 this.objects.push(new Egg(this.randomPoint(), 'deer'))
-
-            } else if (this.name === 'cloudland') {
-                this.objects.push(new Toy(this.randomPoint(), 'glider'))
-                this.objects.push(new Food(this.randomPoint(), 'dumplings'))
-                this.objects.push(new Egg(this.randomPoint(), 'alicorn'))
-
-            } else if (this.name === 'asteroid') {
-                this.objects.push(new Toy(this.randomPoint(), 'robot'))
-                this.objects.push(new Food(this.randomPoint(), 'juiceorb'))
-                this.objects.push(new Egg(this.randomPoint(), 'alien'))
 
             } else if (this.name === 'flowertown') {
                 this.objects.push(new Toy(this.randomPoint(), 'dancingflower'))
@@ -158,6 +155,16 @@ class Planet extends ScreenState {
                 this.objects.push(new Food(this.randomPoint(), 'dragonfruit'))
                 this.objects.push(new Egg(this.randomPoint(), 'leafcat'))
 
+            } else if (this.name === 'cloudland') {
+                this.objects.push(new Toy(this.randomPoint(), 'glider'))
+                this.objects.push(new Food(this.randomPoint(), 'dumplings'))
+                this.objects.push(new Egg(this.randomPoint(), 'alicorn'))
+
+            } else if (this.name === 'asteroid') {
+                this.objects.push(new Toy(this.randomPoint(), 'robot'))
+                this.objects.push(new Food(this.randomPoint(), 'juiceorb'))
+                this.objects.push(new Egg(this.randomPoint(), 'alien'))
+
             } else if (this.name === 'crystalcave') {
                 this.objects.push(new Toy(this.randomPoint(), 'magicwand'))
                 this.objects.push(new Food(this.randomPoint(), 'rockcandy'))
@@ -168,13 +175,6 @@ class Planet extends ScreenState {
                 this.objects.push(new Food(this.randomPoint(), 'icecream'))
                 this.objects.push(new Egg(this.randomPoint(), 'sheep'))
 
-            } else if (this.name === 'park') {
-                this.objects.push(new Toy(this.randomPoint(), 'bundoll'))
-                this.objects.push(new Food(this.randomPoint(), 'sandwich'))
-                this.objects.push(new Egg(this.randomPoint(), 'intro'))
-                this.objects.push(new Egg(this.randomPoint(), 'intro'))
-                this.objects.push(new Egg(this.randomPoint(), 'intro'))
-
             } else if (this.name === 'bubbledome') {
                 this.objects.push(new Toy(this.randomPoint(), 'beachball'))
                 this.objects.push(new Food(this.randomPoint(), 'seaweed'))
@@ -184,7 +184,7 @@ class Planet extends ScreenState {
                 this.objects.push(new Toy(this.randomPoint(), 'pullturtle'))
                 this.objects.push(new Food(this.randomPoint(), 'succulent'))
                 this.objects.push(new Egg(this.randomPoint(), 'lizard'))
-            }
+            } 
         }
 
     }
@@ -193,16 +193,14 @@ class Planet extends ScreenState {
 
         this.isBlastingOff = false
         unlockedPlanetCount = planets.filter(p => p.isUnlocked).length
-		playMusic(this.name)
+
+        if (!MUTE) planetSoundtracks[this.name].play()
 
     }
 
     close() {
 
-		stopMusic(this.name)
-        Object.keys(soundEffects).forEach(soundName => {
-            soundEffects[soundName].pause()
-        })
+        planetSoundtracks[this.name].stop()
 
     }
 
@@ -289,6 +287,13 @@ class Planet extends ScreenState {
         // draw pause button
         if (this.isPaused) image(unpauseButtonImg, pauseButton.x, pauseButton.y)
         else image(pauseButtonImg, pauseButton.x, pauseButton.y)
+
+        // draw all download button
+		if (selectedBunbon && selectedBunbon instanceof Bunbon) {
+			image(downloadAllButtonImg, downloadAllButton.x, downloadAllButton.y)
+		} else {
+			image(disabledAllDownloadButtonImg, downloadAllButton.x, downloadAllButton.y)
+		}
 
         // draw storage button
         let posX = mouseX / CANVAS_SCALE
@@ -486,7 +491,7 @@ class Planet extends ScreenState {
             y >= spaceButton.y && y < spaceButton.y + spaceButton.height
         ) {
             if (this.isPaused) togglePause()
-            playSound('go-to-space')
+            if (!MUTE) soundEffects['go-to-space'].play()
             openScreen('space', this.index)
 
         } else if (!this.isPaused) {
@@ -497,12 +502,12 @@ class Planet extends ScreenState {
                 y >= blastOffButton.y && y < blastOffButton.y + blastOffButton.height
             ) {
                 if (confirmingBlastOff) {
-                    playSound('click-launch-2')
+                    if (!MUTE) soundEffects['click-launch-2'].play()
                     this.isBlastingOff = true
                     confirmingBlastOff = false
                     selectedBunbon.startBlastOff()
                 } else {
-                    playSound('click-launch-1')
+                    if (!MUTE) soundEffects['click-launch-1'].play()
                     confirmingBlastOff = true
                 }
             }
@@ -510,8 +515,14 @@ class Planet extends ScreenState {
             else {
                 confirmingBlastOff = false
             }
+        } else if (
+            x >= downloadAllButton.x && x < downloadAllButton.x + downloadAllButton.width &&
+            y >= downloadAllButton.y && y < downloadAllButton.y + downloadAllButton.height 
+        ) {
+            console.log('download all pressed')
+            togglePause()
+            //downloadBunbon(selectedBunbon)
         }
-
     }
 
     keyPressed() {

@@ -358,6 +358,7 @@ class Storage extends ScreenState {
 		modal.innerHTML = ''
 
 		//let introBunbonColors = ['grey', 'black', 'dust', 'chocolate', 'cream']
+		let eggList = ['intro', 'deer', 'bee', 'alicorn', 'alien', 'leafcat', 'snail', 'sheep', 'fish', 'lizard', 'randomegg']
 		let eggColors = {
 			'intro': 'chocolate',
 			'deer': 'dust',
@@ -367,14 +368,18 @@ class Storage extends ScreenState {
 			'leafcat': 'gold',
 			'snail': 'blush',
 			'sheep': 'cream',
-			'aqua': 'aqua',
+			'fish': 'aqua',
 			'lizard': 'green',
 			'mousepunk' : 'grey',
 			'dragonegg' : 'green',
-			'rat' : 'pink',
 			'randomegg' : 'black'
 		}
-		
+
+		let specialEggList = ['']
+		let specialEggs = {
+			//'intro': 1,
+			//'randomegg' : 2
+		}
 
 		let addItem = itemName => {
 			
@@ -382,17 +387,56 @@ class Storage extends ScreenState {
 			imageEl.width = 64
 			imageEl.height = 64
 			imageEl.alt = itemName
-
+			//console.log({colorSpritesheets,bunbonEggs}, this.objects)
 			let eggSprite = bunbonEggs[0]
-			let spriteIndex = foodList.includes(itemName) ? foodSprites[itemName] : toyList.includes(itemName) ? toySprites[itemName] : eggSprite
-			let itemSprite = foodList.includes(itemName) || toyList.includes(itemName) ? baseSpritesheet.getSprite(spriteIndex) : colorSpritesheets[eggColors[itemName]].getSprite(eggSprite)
+			//let spriteIndex = foodList.includes(itemName) ? foodSprites[itemName] : toyList.includes(itemName) ? toySprites[itemName] : eggSprite
+			
+			//let specialEgg= toySprites[toyType]
+
+			
+			let spriteIndex
+				if (foodList.includes(itemName)){
+
+					spriteIndex = foodSprites[itemName]
+				} 
+				else if (toyList.includes(itemName)) {
+					spriteIndex = toySprites[itemName]
+				} else if (eggList.includes(itemName)) {
+					spriteIndex = eggSprite
+				} else if (specialEggList.includes(itemName)) {
+					spriteIndex = specialEggs[itemName]
+			  	}	
+			
+
+			//{
+			//console.log(colorSpritesheets[eggColors[itemName]].getSprite(eggSprite))
+			//Spritesheet(spritesheetImg, 32, 32)
+			//toys list egg as toy?
+			//bunbonEggs = egg sprites
+			//called egg, no sprite, on add has sprites
+			//console.log(eggColors())
+			//let itemSprite = foodList.includes(itemName) || toyList.includes(itemName) ? baseSpritesheet.getSprite(spriteIndex) : colorSpritesheets[eggColors()[itemName]].getSprite(eggSprite)
+			//let itemSprite = baseSpritesheet.getSprite(spriteIndex)
+			//console.log({spriteIndex})
+			//}
+
+
+			
+			
+			if (eggList.includes(itemName)) itemSprite = colorSpritesheets[eggColors[itemName]].getSprite(eggSprite)
+			else itemSprite = baseSpritesheet.getSprite(spriteIndex)
+			//let itemSprite = foodList.includes(itemName) || toyList.includes(itemName) ? baseSpritesheet.getSprite(spriteIndex) : colorSpritesheets[eggColors[itemName]].getSprite(eggSprite)
+			
+			
 			if (spriteIndex=eggSprite) {this.color}
+			
 
 			imageEl.src = itemSprite.canvas.toDataURL()
 			let buttonEl = document.createElement('button')
 			buttonEl.className = 'image-button'
 			buttonEl.onclick = () => {
 				let item = foodList.includes(itemName) ? new Food(this.randomPoint(), itemName) : toyList.includes(itemName) ? new Toy(this.randomPoint(), itemName)  :new Egg(this.randomPoint(), itemName)				
+
 				this.addObject(item)
 				saveState()
 				closeModal()
@@ -400,9 +444,6 @@ class Storage extends ScreenState {
 			buttonEl.appendChild(imageEl)
 			modal.appendChild(buttonEl)
 		}
-
-//try adding sprite list for eggs like toys
-//see if possible to use else in list to save listing all
 
 		let addNewItem = itemName => {
 			
@@ -509,11 +550,10 @@ class Storage extends ScreenState {
 			//this.objects.push(new Egg(this.randomPoint(), 'lizard'))
 			//storageScreen.addObject('mousepunk')
 			//addItem('mousepunk')
-			addNewItem('mousepunk')
-			addNewItem('dragonegg')
+			addItem('mousepunk')
+			addItem('dragonegg')
 
-			addNewItem('rat')
-			addNewItem('randomegg')
+			addItem('randomegg')
 		}
 
 		//if (spriteIndex=eggSprite) {this.bunbonDNA.color}

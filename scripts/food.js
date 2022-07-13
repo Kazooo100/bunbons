@@ -52,7 +52,7 @@ class Food extends GameObject {
         }
 
         if (!agent) {
-            playSound('click-food')
+            if (!MUTE) soundEffects['click-food'].play()
         }
 
     }

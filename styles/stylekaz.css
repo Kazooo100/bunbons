@@ -1,6 +1,6 @@
 @font-face {
-    font-family: '04B';
-    src: url('fonts/04B_03.woff');
+    font-family: 'UbuntuMono-Bold';
+    src: url('fonts/UbuntuMono-Bold.woff');
 }
 
 html, body {
@@ -18,7 +18,7 @@ html, body {
 body {
     background-image: url("../images/titlescreen.gif");
     background-repeat: no-repeat;
-    background-position: center 20px;
+    background-position: center center;
     background-size: 640px 480px;
 }
 
@@ -35,7 +35,7 @@ canvas {
     image-rendering: crisp-edges;
     image-rendering: pixelated;
     width: min(calc(100vh * calc(4 / 3)), 100%) !important;
-    height: min(calc(100vw * calc(3 / 4)), 100%) !important;   
+    height: min(calc(100vw * calc(3 / 4)), 100%) !important;    
 }
 
 img {
@@ -116,24 +116,4 @@ button:focus {
 
 button:hover {
     box-shadow: 0 0 0 5px #625465;
-}
-
-.image-button {
-	width: 68px;
-	height: 68px;
-	padding: 2px;
-	margin: 2px;
-	box-shadow: none;
-	background: #62546522;
-	transition: background 100ms;
-}
-
-.image-button:hover {
-	box-shadow: none;
-	background: #62546544;
-}
-
-.image-button:focus {
-	box-shadow: none;
-	background: #625465;
 }

@@ -116,8 +116,8 @@ class ScreenState {
             this.originalX = this.draggedObject.pos.x
             this.originalY = this.draggedObject.pos.y
 
-            if (this.draggedObject instanceof Bunbon) {
-                playSound('click-bunbon')
+            if (this.draggedObject instanceof Bunbon && !MUTE) {
+                soundEffects['click-bunbon'].play()
             }
         }
 
@@ -137,8 +137,8 @@ class ScreenState {
                 this.draggedObject.pos.x = posX
                 this.draggedObject.pos.y = posY
                 if (this.draggedObject instanceof Bunbon) {
-                    stopSound('click-bunbon')
-                    stopSound('bunbon-pet')
+                    if (soundEffects['click-bunbon'].isPlaying()) soundEffects['click-bunbon'].stop()
+                    if (soundEffects['bunbon-pet'].isPlaying()) soundEffects['bunbon-pet'].stop()
                 }
             }
         }
@@ -215,7 +215,7 @@ class ScreenState {
                     this.draggedObject.onPush()
                     if (this.draggedObject instanceof Bunbon) {
                         this.selectedBunbonIndex = this.objects.findIndex(obj => obj.name === this.draggedObject.name)
-                        stopSound('bunbon-pet')
+                        if (soundEffects['bunbon-pet'].isPlaying()) soundEffects['bunbon-pet'].stop()
                     }
                 }
 
@@ -223,7 +223,7 @@ class ScreenState {
 
             if (dropSucceeded) {
                 this.draggedObject.onDrop(this.objects)
-                playSound('drop-in-world')
+                if (!MUTE) soundEffects['drop-in-world'].play()
             } else {
                 this.draggedObject.pos.x = this.originalX
                 this.draggedObject.pos.y = this.originalY
